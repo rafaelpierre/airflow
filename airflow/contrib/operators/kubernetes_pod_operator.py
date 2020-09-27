@@ -29,7 +29,10 @@ from airflow.utils.helpers import validate_key
 from airflow.utils.state import State
 from airflow.version import version as airflow_version
 from airflow.kubernetes.pod_generator import PodGenerator
+<<<<<<< HEAD
 from kubernetes.client import models as k8s
+=======
+>>>>>>> Allow overrides for pod_template_file (#11162)
 
 
 class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-attributes
@@ -367,6 +370,7 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
         else:
             pod_template = k8s.V1Pod(metadata=k8s.V1ObjectMeta(name="name"))
 
+<<<<<<< HEAD
         pod = pod_generator.PodGenerator(
             image=self.image,
             namespace=self.namespace,
@@ -414,6 +418,54 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
 
         # if self.do_xcom_push:
         #     pod = PodGenerator.add_sidecar(pod)
+=======
+        pod = k8s.V1Pod(
+            api_version="v1",
+            kind="Pod",
+            metadata=k8s.V1ObjectMeta(
+                namespace=self.namespace,
+                labels=self.labels,
+                name=self.name,
+                annotations=self.annotations,
+
+            ),
+            spec=k8s.V1PodSpec(
+                node_selector=self.node_selectors,
+                affinity=self.affinity,
+                tolerations=self.tolerations,
+                init_containers=self.init_containers,
+                containers=[
+                    k8s.V1Container(
+                        image=self.image,
+                        name="base",
+                        command=self.cmds,
+                        ports=self.ports,
+                        resources=self.k8s_resources,
+                        volume_mounts=self.volume_mounts,
+                        args=self.arguments,
+                        env=self.env_vars,
+                        env_from=self.env_from,
+                    )
+                ],
+                image_pull_secrets=self.image_pull_secrets,
+                service_account_name=self.service_account_name,
+                host_network=self.hostnetwork,
+                security_context=self.security_context,
+                dns_policy=self.dnspolicy,
+                scheduler_name=self.schedulername,
+                restart_policy='Never',
+                priority_class_name=self.priority_class_name,
+                volumes=self.volumes,
+            )
+        )
+
+        pod = PodGenerator.reconcile_pods(pod_template, pod)
+
+        for secret in self.secrets:
+            pod = secret.attach_to_pod(pod)
+        if self.do_xcom_push:
+            pod = PodGenerator.add_xcom_sidecar(pod)
+>>>>>>> Allow overrides for pod_template_file (#11162)
         return pod
 
     def create_new_pod_for_operator(self, labels, launcher):
