@@ -342,8 +342,11 @@ function initialization::initialize_image_build_variables() {
     export AIRFLOW_PRE_CACHED_PIP_PACKAGES="${AIRFLOW_PRE_CACHED_PIP_PACKAGES:="true"}"
     # by default install mysql client
     export INSTALL_MYSQL_CLIENT=${INSTALL_MYSQL_CLIENT:="true"}
+<<<<<<< HEAD
     # additional tag for the image
     export IMAGE_TAG=${IMAGE_TAG:=""}
+=======
+>>>>>>> Conditional MySQL Client installation (#11174)
 }
 
 # Determine version suffixes used to build backport packages

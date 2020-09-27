@@ -50,7 +50,11 @@ if [[ ${INSTALL_MYSQL_CLIENT:="true"} == "true" ]]; then
     gpgconf --kill all
     rm -rf "${GNUPGHOME}"
     apt-key list > /dev/null
+<<<<<<< HEAD
     echo "deb http://repo.mysql.com/apt/debian/ buster mysql-5.7" | tee -a /etc/apt/sources.list.d/mysql.list
+=======
+    echo "deb http://repo.mysql.com/apt/debian/ stretch mysql-5.6" | tee -a /etc/apt/sources.list.d/mysql.list
+>>>>>>> Conditional MySQL Client installation (#11174)
     apt-get update
     apt-get install --no-install-recommends -y "${packages[@]}"
     apt-get autoremove -yqq --purge
