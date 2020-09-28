@@ -20,7 +20,10 @@ import re
 import yaml
 
 from airflow.exceptions import AirflowException
+<<<<<<< HEAD
 from airflow.kubernetes.k8s_model import append_to_pod
+=======
+>>>>>>> fixup! Allow overrides for pod_template_file (#11162)
 from airflow.kubernetes import kube_client, pod_generator, pod_launcher
 from airflow.kubernetes.pod import Resources
 from airflow.models import BaseOperator
@@ -30,9 +33,13 @@ from airflow.utils.state import State
 from airflow.version import version as airflow_version
 from airflow.kubernetes.pod_generator import PodGenerator
 <<<<<<< HEAD
+<<<<<<< HEAD
 from kubernetes.client import models as k8s
 =======
 >>>>>>> Allow overrides for pod_template_file (#11162)
+=======
+from kubernetes.client import models as k8s
+>>>>>>> fixup! Allow overrides for pod_template_file (#11162)
 
 
 class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-attributes
