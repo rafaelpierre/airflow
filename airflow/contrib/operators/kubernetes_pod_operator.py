@@ -21,9 +21,13 @@ import yaml
 
 from airflow.exceptions import AirflowException
 <<<<<<< HEAD
+<<<<<<< HEAD
 from airflow.kubernetes.k8s_model import append_to_pod
 =======
 >>>>>>> fixup! Allow overrides for pod_template_file (#11162)
+=======
+from airflow.kubernetes.k8s_model import append_to_pod
+>>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
 from airflow.kubernetes import kube_client, pod_generator, pod_launcher
 from airflow.kubernetes.pod import Resources
 from airflow.models import BaseOperator
@@ -378,6 +382,9 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
             pod_template = k8s.V1Pod(metadata=k8s.V1ObjectMeta(name="name"))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
         pod = pod_generator.PodGenerator(
             image=self.image,
             namespace=self.namespace,
@@ -412,6 +419,7 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
             self.secrets +  # type: ignore
             self.volumes +  # type: ignore
             self.volume_mounts  # type: ignore
+<<<<<<< HEAD
         )
 
         env_from = pod.spec.containers[0].env_from or []
@@ -464,15 +472,29 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
                 priority_class_name=self.priority_class_name,
                 volumes=self.volumes,
             )
+=======
+>>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
         )
 
+        env_from = pod.spec.containers[0].env_from or []
+        for configmap in self.configmaps:
+            env_from.append(k8s.V1EnvFromSource(config_map_ref=k8s.V1ConfigMapEnvSource(name=configmap)))
+        pod.spec.containers[0].env_from = env_from
+
+        if self.full_pod_spec:
+            pod_template = PodGenerator.reconcile_pods(pod_template, self.full_pod_spec)
         pod = PodGenerator.reconcile_pods(pod_template, pod)
 
+<<<<<<< HEAD
         for secret in self.secrets:
             pod = secret.attach_to_pod(pod)
         if self.do_xcom_push:
             pod = PodGenerator.add_xcom_sidecar(pod)
 >>>>>>> Allow overrides for pod_template_file (#11162)
+=======
+        # if self.do_xcom_push:
+        #     pod = PodGenerator.add_sidecar(pod)
+>>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
         return pod
 
     def create_new_pod_for_operator(self, labels, launcher):
