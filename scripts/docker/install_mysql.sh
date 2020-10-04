@@ -51,10 +51,14 @@ if [[ ${INSTALL_MYSQL_CLIENT:="true"} == "true" ]]; then
     rm -rf "${GNUPGHOME}"
     apt-key list > /dev/null
 <<<<<<< HEAD
+<<<<<<< HEAD
     echo "deb http://repo.mysql.com/apt/debian/ buster mysql-5.7" | tee -a /etc/apt/sources.list.d/mysql.list
 =======
     echo "deb http://repo.mysql.com/apt/debian/ stretch mysql-5.6" | tee -a /etc/apt/sources.list.d/mysql.list
 >>>>>>> Conditional MySQL Client installation (#11174)
+=======
+    echo "deb http://repo.mysql.com/apt/debian/ stretch mysql-5.6" | tee -a /etc/apt/sources.list.d/mysql.list
+>>>>>>> 844df3264f1e3b17348b433498830d780af555f2
     apt-get update
     apt-get install --no-install-recommends -y "${packages[@]}"
     apt-get autoremove -yqq --purge

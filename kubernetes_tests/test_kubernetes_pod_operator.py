@@ -841,15 +841,7 @@ class TestKubernetesPodOperatorSystem(unittest.TestCase):
         k = KubernetesPodOperator(
             task_id="task" + self.get_current_task_name(),
             labels={"foo": "bar", "fizz": "buzz"},
-<<<<<<< HEAD
-<<<<<<< HEAD
             env_vars={"env_name": "value"},
-=======
-            env_vars=[k8s.V1EnvVar(name="env_name", value="value")],
->>>>>>> Allow overrides for pod_template_file (#11162)
-=======
-            env_vars={"env_name": "value"},
->>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
             in_cluster=False,
             pod_template_file=fixture,
             do_xcom_push=True
@@ -985,14 +977,7 @@ class TestKubernetesPodOperatorSystem(unittest.TestCase):
                                                   'env': [],
                                                   'envFrom': [],
                                                   'image': 'apache/airflow:stress-2020.07.10-1.0.4',
-<<<<<<< HEAD
-<<<<<<< HEAD
                                                   'imagePullPolicy': 'IfNotPresent',
-=======
->>>>>>> Allow overrides for pod_template_file (#11162)
-=======
-                                                  'imagePullPolicy': 'IfNotPresent',
->>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
                                                   'name': 'base',
                                                   'ports': [],
                                                   'resources': {'limits': {'memory': '200Mi'},
@@ -1028,7 +1013,6 @@ class TestKubernetesPodOperatorSystem(unittest.TestCase):
             monitor_mock,
             start_mock):  # pylint: disable=unused-argument
         """Test ability to assign priorityClassName to pod
-
         """
         from airflow.utils.state import State
 

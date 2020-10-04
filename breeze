@@ -960,6 +960,7 @@ function breeze::parse_arguments() {
             echo "Additional apt dev dependencies: ${ADDITIONAL_DEV_APT_DEPS}"
             shift 2
             ;;
+<<<<<<< HEAD
         --dev-apt-commad)
             export DEV_APT_COMMAND="${2}"
             echo "Apt dev command: ${DEV_APT_COMMAND}"
@@ -1010,6 +1011,8 @@ function breeze::parse_arguments() {
             echo "Tag to add to the image: ${IMAGE_TAG}"
             shift 2
             ;;
+=======
+>>>>>>> 844df3264f1e3b17348b433498830d780af555f2
         --disable-mysql-client-installation)
             export INSTALL_MYSQL_CLIENT="false"
             echo "Install MySQL client: ${INSTALL_MYSQL_CLIENT}"
@@ -2224,6 +2227,10 @@ ${FORMATTED_DEFAULT_PROD_EXTRAS}
         Additional environment variables set when adding runtime dependencies.
 
 Build options:
+
+--disable-mysql-client-installation
+        Disables installation of the mysql client which might be problematic if you are building
+        image in controlled environment. Only valid for production image.
 
 --disable-mysql-client-installation
         Disables installation of the mysql client which might be problematic if you are building

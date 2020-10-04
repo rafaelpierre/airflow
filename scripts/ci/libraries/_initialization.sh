@@ -343,10 +343,13 @@ function initialization::initialize_image_build_variables() {
     # by default install mysql client
     export INSTALL_MYSQL_CLIENT=${INSTALL_MYSQL_CLIENT:="true"}
 <<<<<<< HEAD
+<<<<<<< HEAD
     # additional tag for the image
     export IMAGE_TAG=${IMAGE_TAG:=""}
 =======
 >>>>>>> Conditional MySQL Client installation (#11174)
+=======
+>>>>>>> 844df3264f1e3b17348b433498830d780af555f2
 }
 
 # Determine version suffixes used to build backport packages

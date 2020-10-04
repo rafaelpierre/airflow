@@ -144,7 +144,10 @@ runtime-apt-deps: additional-runtime-apt-deps: runtime-apt-command: additional-r
 =======
 additional-extras: additional-python-deps: additional-dev-deps: additional-runtime-deps:
 disable-mysql-client-installation
+<<<<<<< HEAD
 >>>>>>> Conditional MySQL Client installation (#11174)
+=======
+>>>>>>> 844df3264f1e3b17348b433498830d780af555f2
 load-default-connections load-example-dags
 "
 

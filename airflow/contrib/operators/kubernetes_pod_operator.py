@@ -20,14 +20,8 @@ import re
 import yaml
 
 from airflow.exceptions import AirflowException
-<<<<<<< HEAD
-<<<<<<< HEAD
 from airflow.kubernetes.k8s_model import append_to_pod
-=======
->>>>>>> fixup! Allow overrides for pod_template_file (#11162)
-=======
 from airflow.kubernetes.k8s_model import append_to_pod
->>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
 from airflow.kubernetes import kube_client, pod_generator, pod_launcher
 from airflow.kubernetes.pod import Resources
 from airflow.models import BaseOperator
@@ -36,15 +30,9 @@ from airflow.utils.helpers import validate_key
 from airflow.utils.state import State
 from airflow.version import version as airflow_version
 from airflow.kubernetes.pod_generator import PodGenerator
-<<<<<<< HEAD
-<<<<<<< HEAD
 from kubernetes.client import models as k8s
-=======
->>>>>>> Allow overrides for pod_template_file (#11162)
-=======
 from kubernetes.client import models as k8s
->>>>>>> fixup! Allow overrides for pod_template_file (#11162)
-
+from kubernetes.client import models as k8s
 
 class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-attributes
     """
@@ -381,10 +369,6 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
         else:
             pod_template = k8s.V1Pod(metadata=k8s.V1ObjectMeta(name="name"))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
         pod = pod_generator.PodGenerator(
             image=self.image,
             namespace=self.namespace,
@@ -419,7 +403,6 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
             self.secrets +  # type: ignore
             self.volumes +  # type: ignore
             self.volume_mounts  # type: ignore
-<<<<<<< HEAD
         )
 
         env_from = pod.spec.containers[0].env_from or []
@@ -433,7 +416,6 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
 
         # if self.do_xcom_push:
         #     pod = PodGenerator.add_sidecar(pod)
-=======
         pod = k8s.V1Pod(
             api_version="v1",
             kind="Pod",
@@ -472,8 +454,6 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
                 priority_class_name=self.priority_class_name,
                 volumes=self.volumes,
             )
-=======
->>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
         )
 
         env_from = pod.spec.containers[0].env_from or []
@@ -485,16 +465,11 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
             pod_template = PodGenerator.reconcile_pods(pod_template, self.full_pod_spec)
         pod = PodGenerator.reconcile_pods(pod_template, pod)
 
-<<<<<<< HEAD
         for secret in self.secrets:
             pod = secret.attach_to_pod(pod)
         if self.do_xcom_push:
             pod = PodGenerator.add_xcom_sidecar(pod)
->>>>>>> Allow overrides for pod_template_file (#11162)
-=======
-        # if self.do_xcom_push:
-        #     pod = PodGenerator.add_sidecar(pod)
->>>>>>> fixup! fixup! Allow overrides for pod_template_file (#11162)
+
         return pod
 
     def create_new_pod_for_operator(self, labels, launcher):
