@@ -21,7 +21,6 @@ import yaml
 
 from airflow.exceptions import AirflowException
 from airflow.kubernetes.k8s_model import append_to_pod
-from airflow.kubernetes.k8s_model import append_to_pod
 from airflow.kubernetes import kube_client, pod_generator, pod_launcher
 from airflow.kubernetes.pod import Resources
 from airflow.models import BaseOperator
@@ -31,18 +30,15 @@ from airflow.utils.state import State
 from airflow.version import version as airflow_version
 from airflow.kubernetes.pod_generator import PodGenerator
 from kubernetes.client import models as k8s
-from kubernetes.client import models as k8s
-from kubernetes.client import models as k8s
+
 
 class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-attributes
     """
     Execute a task in a Kubernetes Pod
-
     .. note::
         If you use `Google Kubernetes Engine <https://cloud.google.com/kubernetes-engine/>`__, use
         :class:`~airflow.gcp.operators.kubernetes_engine.GKEPodOperator`, which
         simplifies the authorization process.
-
     :param image: Docker image you wish to launch. Defaults to hub.docker.com,
         but fully qualified URLS will point to custom repositories.
     :type image: str
@@ -247,7 +243,6 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
     def create_labels_for_pod(context):
         """
         Generate labels for the pod to track the pod in case of Operator crash
-
         :param context: task context provided by airflow DAG
         :return: dict
         """
@@ -416,66 +411,11 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
 
         # if self.do_xcom_push:
         #     pod = PodGenerator.add_sidecar(pod)
-        pod = k8s.V1Pod(
-            api_version="v1",
-            kind="Pod",
-            metadata=k8s.V1ObjectMeta(
-                namespace=self.namespace,
-                labels=self.labels,
-                name=self.name,
-                annotations=self.annotations,
-
-            ),
-            spec=k8s.V1PodSpec(
-                node_selector=self.node_selectors,
-                affinity=self.affinity,
-                tolerations=self.tolerations,
-                init_containers=self.init_containers,
-                containers=[
-                    k8s.V1Container(
-                        image=self.image,
-                        name="base",
-                        command=self.cmds,
-                        ports=self.ports,
-                        resources=self.k8s_resources,
-                        volume_mounts=self.volume_mounts,
-                        args=self.arguments,
-                        env=self.env_vars,
-                        env_from=self.env_from,
-                    )
-                ],
-                image_pull_secrets=self.image_pull_secrets,
-                service_account_name=self.service_account_name,
-                host_network=self.hostnetwork,
-                security_context=self.security_context,
-                dns_policy=self.dnspolicy,
-                scheduler_name=self.schedulername,
-                restart_policy='Never',
-                priority_class_name=self.priority_class_name,
-                volumes=self.volumes,
-            )
-        )
-
-        env_from = pod.spec.containers[0].env_from or []
-        for configmap in self.configmaps:
-            env_from.append(k8s.V1EnvFromSource(config_map_ref=k8s.V1ConfigMapEnvSource(name=configmap)))
-        pod.spec.containers[0].env_from = env_from
-
-        if self.full_pod_spec:
-            pod_template = PodGenerator.reconcile_pods(pod_template, self.full_pod_spec)
-        pod = PodGenerator.reconcile_pods(pod_template, pod)
-
-        for secret in self.secrets:
-            pod = secret.attach_to_pod(pod)
-        if self.do_xcom_push:
-            pod = PodGenerator.add_xcom_sidecar(pod)
-
         return pod
 
     def create_new_pod_for_operator(self, labels, launcher):
         """
         Creates a new pod and monitors for duration of task
-
         @param labels: labels used to track pod
         @param launcher: pod launcher that will manage launching and monitoring pods
         @return:
@@ -511,7 +451,6 @@ class KubernetesPodOperator(BaseOperator):  # pylint: disable=too-many-instance-
     def monitor_launched_pod(self, launcher, pod):
         """
         Monitors a pod to completion that was created by a previous KubernetesPodOperator
-
         :param launcher: pod launcher that will manage launching and monitoring pods
         :param pod: podspec used to find pod using k8s API
         :return:
